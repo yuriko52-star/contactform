@@ -16,12 +16,16 @@ git commit -m "リモートリポジトリの変更"
 git push origin main  
 エラーが発生する場合は、 sudo chmod -R 777 *  
 
-git cloneしたらやること  
+## git cloneしたらやること  
 docker-compose up -d --build  
 docker-compose exec php bash  
 composer install  
 .env ファイルの作成  
 cp .env.example .env  
 テキストを参照
-データベースが存在しているかを確認　　
-画面表示する前にマイグレーションしておくこと
+データベースが存在しているかを確認  
+アプリケーションキーの作成  
+php artisan key:generate  
+マイグレーションの実行  
+php artisan migrate  
+　　
