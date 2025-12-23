@@ -29,3 +29,6 @@ php artisan key:generate
 マイグレーションの実行  
 php artisan migrate  
 　　
+### 覚書  
+@vite使用の際は、src下でnpm run devをすること  
+(その前にnpm installする)  

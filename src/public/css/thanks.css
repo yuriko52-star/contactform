@@ -1,0 +1,59 @@
+body {
+    /* background-color: antiquewhite; */
+    
+}
+
+.wrapper {
+    max-width: 1400px;
+    /* margin: 0 auto 298px; */
+    position: relative;
+    margin: 200px auto;
+   
+
+}
+
+.message {
+    /* margin: 319px auto 298px; */
+    font-size: 280px;
+    color: rgba(139, 121, 105, 0.05);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+font-family: 'Inika', sans-serif;
+    font-weight: 400;
+
+
+
+    text-align: center;
+
+}
+
+p {
+    font-size: 30px;
+    font-weight: 700;
+    color: rgba(139, 121, 105, 1);
+    position: absolute;
+    top: 132px;
+    left: 32%;
+    right: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    background-color: rgba(130, 117, 106, 1);
+    display: block;
+    width: 140px;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+}
+
+.to-home {
+    position: absolute;
+    top: 232px;
+    left: 47%;
+    /* right:0;  */
+}

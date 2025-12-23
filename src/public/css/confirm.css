@@ -1,0 +1,51 @@
+#header {
+    height: 100px;
+    background-color: antiquewhite;
+
+}
+
+.site-title {
+    text-align: center;
+    line-height: 100px;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+
+}
+.page-title {
+    text-align: center;
+    margin: 30px 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    margin-bottom: 60px;
+}
+th {
+    width: calc(100% / 3);
+    background-color: brown;
+    color: #fff;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    padding: 10px;
+}
+td {
+    width: calc((100% / 3)*2);
+    background-color: #fff;
+    border-bottom: 1px solid #000;
+    padding: 10px;
+}
+.btns {
+    text-align: center;
+}
+.to-send {
+    padding: 5px 10px;
+    border: 1px solid #000;
+    margin-right: 10px;
+}
+.update {
+    border-bottom :1px solid #000;
+}
