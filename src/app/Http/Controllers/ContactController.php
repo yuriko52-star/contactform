@@ -29,7 +29,7 @@ class ContactController extends Controller
     }
     public function store(ContactRequest $request) {
         if($request->has('back')) {
-            return redirect('/')->withInput();
+            return redirect('/contact')->withInput();
         }
         
        

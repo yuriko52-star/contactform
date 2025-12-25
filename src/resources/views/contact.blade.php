@@ -10,6 +10,10 @@
 <body>
     <header id="header">
         <h1 class="site-title">FashionablyLate</h1>
+        <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit">Logout</button>
+</form>
     </header>
     <main>
         

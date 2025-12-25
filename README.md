@@ -32,3 +32,13 @@ php artisan migrate
 ### 覚書  
 @vite使用の際は、src下でnpm run devをすること  
 (その前にnpm installする)  
+fortifyについて  
+config/app.php にプロバイダー登録を追加 --→　bootstrap/providers.phpに変更  
+RouteServiceProvider はデフォルトでは存在しない 
+login成功後のページ移動先はFortifyServiceProvider の boot() メソッドで設定  
+  （例）Fortify::redirects('login', '/dashboard');  
+ログアウト後や登録後のリダイレクトも設定できる  
+（例）Fortify::redirects('register', '/welcome');  
+Fortify::redirects('logout', '/');  
+
+  

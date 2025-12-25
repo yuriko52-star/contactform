@@ -15,7 +15,8 @@
 <body>
     <header id="header">
         <h1 class="site-title">FashionablyLate</h1>
-        <form action="" class="">
+        <form action="/logout" method="post">
+            @csrf
             <button class="logout">ログアウト</button>
         </form>
     </header>
