@@ -36,9 +36,97 @@ fortifyについて
 config/app.php にプロバイダー登録を追加 --→　bootstrap/providers.phpに変更  
 RouteServiceProvider はデフォルトでは存在しない 
 login成功後のページ移動先はFortifyServiceProvider の boot() メソッドで設定  
-  （例）Fortify::redirects('login', '/dashboard');  
-ログアウト後や登録後のリダイレクトも設定できる  
-（例）Fortify::redirects('register', '/welcome');  
-Fortify::redirects('logout', '/');  
+確認用パスワードがないときはPasswordValidationRules.phpの'confirmed' を削除する  
+config/fortify.phpの'home' => '/home',を修正する（認証成功後飛びたいところに）　　
+web.phpで設定  
+Route::get('/', function () {  
 
-  
+  if(auth()->check()) {  
+    return redirect('/admin');
+    }  
+    return redirect('/login');
+  });
+  予備のlogout機能が必要になったとき、web.phpにて  
+  use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;とインポート  
+  Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');コントローラは不要　  
+   ログアウトボタンは   
+   <form method="POST" action="{{ route('logout') }}">    
+   @csrf  
+   <button type="submit">Logout</button>  
+   </form>
+  「ログアウト後は必ず / に戻る」仕様になっている  
+  / のルーティングを直せば、必ずログイン画面に行く  
+  / を「ログイン画面」にする  
+  ただし、form の action だけは変えない  
+  ログイン処理の POST 先は /login 固定    
+  / は GET 専用の振り分けルート  
+  FortifyServiceProvider.php の  
+
+Fortify::authenticateUsing(function ($request) { ~ }はそのまま使用
+### 課題  
+ルーティングを仕様書通りにするならCustomLogoutResponseを作成 (LoginResponse / RegisterResponse と混ぜない) 
+1.クラスを作成  
+php artisan make:class App/Http/Responses/LogoutResponse  
+
+ <?php  
+
+
+namespace App\Http\Responses;  
+
+
+use Laravel\Fortify\Contracts\LogoutResponse as LogoutResponseContract;  
+
+
+class LogoutResponse implements  
+ LogoutResponseContract  
+
+{
+    public function toResponse($request)  
+
+    {
+        return redirect('/login');  
+
+    }
+}  
+
+2. FortifyServiceProvider でバインド   
+
+use Laravel\Fortify\Contracts\LogoutResponse;  
+
+use App\Http\Responses\LogoutResponse as CustomLogoutResponse;  
+
+
+public function boot(): void  
+
+{
+    $this->app->singleton(LogoutResponse::class,
+     CustomLogoutResponse::class);  
+
+
+    Fortify::authenticateUsing(function ($request) {  
+
+        $user = \App\Models\User::where('email', $request->email)->first();  
+
+
+        if ($user && \Hash::check($request->password, $user->password)) {  
+
+            return $user;  
+
+        }
+
+        return null;  
+
+    });  
+
+
+    Fortify::loginView(fn () => view('login'));  
+
+    Fortify::registerView(fn () => view('register'));  
+
+}
+
+<!-- 日本語ファイルについてはあとで 
+ composer require laravel-lang/publisher --dev 
+php artisan lang:add ja　　
+php artisan lang:update　-->　
