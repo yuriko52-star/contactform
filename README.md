@@ -51,12 +51,12 @@ Route::get('/', function () {
   Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');コントローラは不要　  
    ログアウトボタンは   
-   <form method="POST" action="{{ route('logout') }}">    
+   form method="POST" action="{{ route('logout') }}"    
    @csrf  
-   <button type="submit">Logout</button>  
-   </form>
-  「ログアウト後は必ず / に戻る」仕様になっている  
-  / のルーティングを直せば、必ずログイン画面に行く  
+   button type="submit">Logout/button  
+   /form
+  「ログアウト後は必ず / に戻る」仕様になっている   
+    / のルーティングを直せば、必ずログイン画面に行く  
   / を「ログイン画面」にする  
   ただし、form の action だけは変えない  
   ログイン処理の POST 先は /login 固定    
@@ -93,23 +93,16 @@ class LogoutResponse implements
 2. FortifyServiceProvider でバインド   
 
 use Laravel\Fortify\Contracts\LogoutResponse;  
-
 use App\Http\Responses\LogoutResponse as CustomLogoutResponse;  
-
-
 public function boot(): void  
-
 {
-    $this->app->singleton(LogoutResponse::class,
-     CustomLogoutResponse::class);  
+  $this->app->singleton(LogoutResponse::class,
+    CustomLogoutResponse::class);  
+  Fortify::authenticateUsing(function ($request) {  
 
+    $user = \App\Models\User::where('email', $request->email)->first();  
 
-    Fortify::authenticateUsing(function ($request) {  
-
-        $user = \App\Models\User::where('email', $request->email)->first();  
-
-
-        if ($user && \Hash::check($request->password, $user->password)) {  
+    if ($user && \Hash::check($request->password, $user->password)) {  
 
             return $user;  
 
@@ -126,7 +119,29 @@ public function boot(): void
 
 }
 
-<!-- 日本語ファイルについてはあとで 
- composer require laravel-lang/publisher --dev 
+バリデーションの日本語化  
+composer require laravel-lang/lang:~7.0 --dev(Laravel8の時)  
+これをインストールしてもjaディレクトリが作られない
+composer require laravel-lang/publisher --dev （代わりにこちらでもいいかも）そのあとで
 php artisan lang:add ja　　
-php artisan lang:update　-->　
+php artisan lang:update  
+だが、実際やったコマンドは別  
+phpコンテナ内でmkdir -p resources/lang/ja  
+cp -r vendor/laravel-lang/lang/src/ja/* resources/lang/ja/  
+
+config/app.php の locale / fallback_locale  
+両方とも'ja'にする  
+キャッシュクリア  
+php artisan config:clear  
+php artisan cache:clear  
+日本語ファイルはcustomが反映されないとのこと（fortifyの時）  
+よってLoginRequestにエラー文を記入  
+Request を差し替える  
+$this->app->bind(FortifyLoginRequest::class, LoginRequest::class);
+FortifyServiceProviderの記述はわすれないこと  use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;　　
+use App\Http\Requests\LoginRequest;　こちらのインポートも  
+キャッシュクリアも忘れずに  
+登録画面ではRegisterRequestは使われないので、App\Actions\Fortify\CreateNewUser.php を編集  
+
+
+
