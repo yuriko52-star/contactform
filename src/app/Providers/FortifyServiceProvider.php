@@ -15,8 +15,8 @@ use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use App\Http\Requests\LoginRequest;
-// use Laravel\Fortify\Http\Requests\RegisterRequest as FortifyRegisterRequest;
-// use App\Http\Requests\RegisterRequest;
+use Laravel\Fortify\Contracts\LogoutResponse;
+use App\Http\Responses\LogoutResponse as CustomLogoutResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -34,6 +34,7 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
+        $this->app->singleton(LogoutResponse::class, CustomLogoutResponse::class);
         /*Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
@@ -66,6 +67,9 @@ class FortifyServiceProvider extends ServiceProvider
             return null;
         });
          Fortify::loginView(function () {
+            if(auth()->check()) {
+                return redirect('/admin');
+            }
             return view('login');
         });
 

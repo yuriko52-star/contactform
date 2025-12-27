@@ -29,7 +29,7 @@ class ContactController extends Controller
     }
     public function store(ContactRequest $request) {
         if($request->has('back')) {
-            return redirect('/contact')->withInput();
+            return redirect('/')->withInput();
         }
         
        
@@ -61,11 +61,12 @@ class ContactController extends Controller
     public function search(Request $request)
     {
         if($request->has('reset')) {
-            return redirect('/admin')->withInput();
+            // return redirect('/admin')->withInput();
+            return redirect('/admin');
         }
         $query = Contact::query();
         $query = $this->getSearchQuery($request, $query);
-        $contacts = $query->paginate(7);
+        $contacts = $query->paginate(7)->withQueryString();
         $categories = Category::all();
         
         return view('admin', compact('contacts', 'categories'));
