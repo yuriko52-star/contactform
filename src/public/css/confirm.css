@@ -1,51 +1,55 @@
-#header {
-    height: 100px;
-    background-color: antiquewhite;
 
-}
 
-.site-title {
-    text-align: center;
-    line-height: 100px;
-}
-
-.wrapper {
+.wrapper { 
     max-width: 900px;
-    margin: 0 auto;
+    margin: 0 auto 37px;
 
 }
-.page-title {
-    text-align: center;
-    margin: 30px 0;
-}
+    
+
 table {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid #000;
+    border: 1px solid #E0DFDE;
     margin-bottom: 60px;
 }
 th {
     width: calc(100% / 3);
-    background-color: brown;
+    background-color: #baa899;
     color: #fff;
-    border-bottom: 1px solid #000;
-    border-right: 1px solid #000;
-    padding: 10px;
+    border-bottom: 1px solid #E0DFDE;
+    border-right: 1px solid #E0DFDE;
+    padding-left: 62px;
+    text-align: left;
+    height: 69px;
+    line-height: 69px;
+    font-weight: 400;
+}
+tr:last-child th {
+    height: 116px;
+    line-height: 116px;
 }
 td {
     width: calc((100% / 3)*2);
     background-color: #fff;
-    border-bottom: 1px solid #000;
-    padding: 10px;
+    border-bottom: 1px solid #E0DFDE;
+    padding-left: 40px;
 }
 .btns {
     text-align: center;
+    font-size: 1.25rem;
+    
 }
 .to-send {
-    padding: 5px 10px;
-    border: 1px solid #000;
-    margin-right: 10px;
+    padding: 10px 40px;
+    color: #fff;
+    margin-right: 52px;
+    background-color: #82756A;
+    border: 0;
 }
 .update {
-    border-bottom :1px solid #000;
+    padding: 10px 40px;
+    background-color: #fff;
+    border: 1px solid #82756a;
+    
 }

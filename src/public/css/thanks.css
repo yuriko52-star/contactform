@@ -1,32 +1,22 @@
-body {
-    /* background-color: antiquewhite; */
-    
+#header {
+    display: none;
 }
-
 .wrapper {
     max-width: 1400px;
-    /* margin: 0 auto 298px; */
     position: relative;
     margin: 200px auto;
-   
-
 }
-
 .message {
-    /* margin: 319px auto 298px; */
+    
     font-size: 280px;
     color: rgba(139, 121, 105, 0.05);
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
-font-family: 'Inika', sans-serif;
+    top: -100px;
+    font-family: 'Inika', sans-serif;
     font-weight: 400;
-
-
-
     text-align: center;
-
 }
 
 p {
@@ -34,7 +24,7 @@ p {
     font-weight: 700;
     color: rgba(139, 121, 105, 1);
     position: absolute;
-    top: 132px;
+    top: 202px;
     left: 32%;
     right: 0;
 }
@@ -53,7 +43,7 @@ a {
 
 .to-home {
     position: absolute;
-    top: 232px;
+    top: 317px;
     left: 47%;
-    /* right:0;  */
+    
 }
