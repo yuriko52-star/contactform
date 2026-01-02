@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- これがないとdeleteできなくてエラーになるよ -->
-    <title>管理ページ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-</head>
-<body>
-    <header id="header">
-        <h1 class="site-title">FashionablyLate</h1>
-        <form action="/logout" method="post">
-            @csrf
-            <button class="logout">ログアウト</button>
-        </form>
-    </header>
-    <main>
-        <h2 class="page-title">Admin</h2>
+@extends('layouts.app')
+@push('head')
+    @vite(['resources/js/admin.js'])
+@endpush
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+@endsection
+
+@section('link')
+<form action="/logout" method="post">
+    @csrf
+    <button class="logout">logout</button>
+</form>
+@endsection
+
+@section('content')
+    <h2 class="page-title">Admin</h2>
         <div class="wrapper">
             <form action="/search" method="get">
                 @csrf
@@ -47,17 +40,16 @@
                     <button class="search-btn item">検索</button>
                     <button class="reset-btn item" name="reset">リセット</button>
                 </div>
+            </form>
+            <div class="flex-item">
+                <form action="{{ route('contacts.export',request()->query()) }}" method="post">
+                    @csrf
+                    <button type="submit"class="export item">エクスポート</button>
                 </form>
-                <div class="flex-item">
-                    <form action="{{ route('contacts.export',request()->query()) }}" method="post">
-                        @csrf
-                        <button type="submit"class="export item">エクスポート
-                        </button>
-                    </form>
                     
                     {{ $contacts->links('vendor.pagination.default') }}
                     
-                </div>
+            </div>
                 <table>
                     <colgroup>  
                         <col style="width: 300px;">
@@ -65,7 +57,6 @@
                         <col style="width: 400px;">
                         <col style="width: 400px;">
                         <col style="width: 100px;">
-                        
                     </colgroup>
                     
                     <tr>
@@ -93,41 +84,34 @@
                             <a href="#" class="detail-link" data-id="{{ $contact->id }}"data-url = "{{ route('contacts.show', $contact) }}">詳細</a>
                             
                         </td>
-
                     </tr>
                     
                     @endforeach
                 </table>
              <div id="modal" class="modal hidden">
-                        <div class="modal-content">
-                           
-                            <dl>
-                                <dt>お名前</dt>
-                                <dd id="modal-name"></dd>
-                                <dt>性別</dt>
-                                <dd id="modal-gender"></dd>
-                                <dt>メールアドレス</dt>
-                                <dd id="modal-email"></dd>
-                                <dt>電話番号</dt>
-                                <dd id="modal-tel"></dd>
-                                <dt>住所</dt>
-                                <dd id="modal-address"></dd>
-                                <dt>建物名</dt>
-                                <dd id="modal-building"></dd>
-                                <dt>お問い合わせの種類</dt>
-                                <dd id="modal-category"></dd>
-                                <dt>お問い合わせ内容</dt>
-                                <dd id="modal-detail"></dd>
-                            </dl>
-                            
-
+                <div class="modal-content">
+                        <dl>
+                            <dt>お名前</dt>
+                            <dd id="modal-name"></dd>
+                            <dt>性別</dt>
+                            <dd id="modal-gender"></dd>
+                            <dt>メールアドレス</dt>
+                            <dd id="modal-email"></dd>
+                            <dt>電話番号</dt>
+                            <dd id="modal-tel"></dd>
+                            <dt>住所</dt>
+                            <dd id="modal-address"></dd>
+                            <dt>建物名</dt>
+                            <dd id="modal-building"></dd>
+                            <dt>お問い合わせの種類</dt>
+                            <dd id="modal-category"></dd>
+                            <dt>お問い合わせ内容</dt>
+                            <dd id="modal-detail"></dd>
+                        </dl>
                             <button id="deleteBtn"class="delete" data-id="">削除</button>
-                            
-                            <button id="closeModal" class="close">C</button>
+                            <button id="closeModal" class="close">✖</button>
                         </div>
         </div>
-    </main>
-    @vite(['resources/js/app.js'])
-</body>
-</html>         
+        
+    @endsection
           

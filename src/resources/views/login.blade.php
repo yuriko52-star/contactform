@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログインページ</title>
-    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+@extends('layouts.app')
+
+@section('css')
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-</head>
-<body>
-    <header id="header">
-        <h1 class="site-title">FashionablyLate</h1>
-        <div class="to-login"><a href="/register" class="link">register</a></div>
-    </header>
-    <main>
+@endsection
+@section('link')
+    
+        <div class="to-register">
+            <a href="/register" class="link">register
+
+            </a>
+        </div>
+@endsection
+
+@section('content')
+<div class="content">
         <h2 class="page-title">Login</h2>
 
         <div class="wrapper">
@@ -37,6 +38,5 @@
                 <input type="submit" class="btn" value="ログイン">
             </form>
         </div>
-    </main>
-</body>
-</html>    
+        </div>
+    @endsection

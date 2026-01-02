@@ -6,7 +6,7 @@ body {
 }
 #header {
     height: 100px;
-    
+    position: relative;
     border-bottom:1px solid #e0dfde;
 
 }
@@ -22,4 +22,6 @@ body {
     font-size: 2.1875rem;
     font-weight: 400;
     margin-bottom: 54px;
+    margin-top: 0;
+    padding-top: 30px;
 }
